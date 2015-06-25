@@ -1,0 +1,39 @@
+<% layout('../layout.ejs') %>
+<% if (session.errors) { %>
+<%= session.errors %>
+<% session.errors = ''; %>
+<% } %>
+<a class="btn btn-primary" href="/create_folder">Créer un répértoire</a>
+
+<table class="table table-striped">
+	<thead>
+		<th></th>
+		<th>Nom</th>
+		<th>Créateur</th>
+		<th>Nombre de fichiers</th>
+		<th>Nombre de téléchargements</th>
+		<th>Date de création</th>
+		<th>Date expiration</th>
+		<th>Suppression</th>
+	</thead>
+	<tbody>
+		<% folders.forEach(function(folder) { %>
+			<% nb = 0 %>
+			<% folder.files.forEach(function(file) { nb += file.nb_downloads; }) %>
+			<tr>
+				<td><i class="glyphicon glyphicon-folder-open"></i></td>
+				<td><a href="/<%= folder.name %>"><%= folder.name %></a></td>
+				<td><%= folder.creator %></td>
+				<td><%= folder.files.length %></td>
+				<td><%= nb %></td>
+				<td>
+					<%= folder.created_at.getDateTwoDigits() %>-<%= folder.created_at.getMonthTwoDigits()%>-<%=folder.created_at.getFullYear()%> <%= folder.created_at.getHoursTwoDigits() %>:<%= folder.created_at.getMinutesTwoDigits() %>:<%= folder.created_at.getSecondsTwoDigits() %>
+				</td>
+				<td>
+					<%= folder.expire_time.getDateTwoDigits() %>-<%=folder.expire_time.getMonthTwoDigits() %>-<%=folder.expire_time.getFullYear()%> <%= folder.expire_time.getHoursTwoDigits() %>:<%= folder.expire_time.getMinutesTwoDigits() %>:<%= folder.expire_time.getSecondsTwoDigits() %>
+				</td>
+				<td><a class="btn btn-danger btn-xs" href="/delete/<%=folder.name%>"><span class="glyphicon glyphicon-remove"></span>Supprimer</a></td>
+			</tr>
+	    <% }); %>
+	</tbody>
+</table>

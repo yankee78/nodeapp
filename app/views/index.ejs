@@ -1,0 +1,62 @@
+<% layout('layout.ejs') %>
+<div class="panel panel-default">
+  <div class="panel-heading">Participants</div>
+  <div class="panel-body">
+    <div style="margin:auto;">
+		<% users.forEach(function(user) { %>
+			<div class="media block-update-card">
+			  <a class="pull-left" href="#">
+			    <img class="media-object update-card-MDimentions" src="img/<%= user.photo %>" alt="...">
+			  </a>
+			  <div class="media-body update-card-body">
+			    <h4 class="media-heading"><%= user.firstname %> <%= user.lastname %></h4>
+			    <p></p>
+			  </div>
+		 	</div>
+		<% }); %>
+	</div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Description</div>
+  <div class="panel-body">
+    Partage de fichiers éphémères<br/>
+	Site web basé sur NodeJS
+	Le but de cette application en ligne est de
+	permettre aux utilisateurs de créer des
+	répertoires et partager des fichiers de
+	manière publique. Les répertoires créés
+	auront une durée de vie fixée dès le
+	départ par le créateur. L’url menant à la
+	page contenant le répertoire doit être
+	simple et correspondre au nom du
+	répertoire, ex : snapafolder.com/nodejs/
+  </div>
+</div>
+<div style="width: 50%; margin: auto;">
+<table class="table table-striped ">
+	<tbody>
+		<tr>
+			<td>Nombre de dossiers actifs</td>
+			<td><%= folders %></td>
+		</tr>
+		<tr>
+			<td>Nombre de dossiers supprimés</td>
+			<td><%= folders_archived %></td>
+		</tr>
+		<tr>
+			<td>Nombre de fichiers actifs</td>
+			<td><%= files %></td>
+		</tr>
+		<tr>
+			<td>Nombre de fichiers supprimés</td>
+			<td><%= files_archived %></td>
+		</tr>
+		<tr>
+			<td>Nombre de téléchargements</td>
+			<td><%= downloads %></td>
+		</tr>
+	</tbody>
+</table>
+</div>
