@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
   firstname: String,
   lastname: String,
+  description: String,
   photo: String,
   created_at    : { type: Date },
   updated_at    : { type: Date }

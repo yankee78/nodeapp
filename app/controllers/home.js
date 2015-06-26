@@ -70,7 +70,7 @@ router.get('/', function (req, res, next) {
     if (err) return next(err);
     res.render('index.ejs', 
       {
-        title: '',
+        title: 'SnapFolder',
         users: users,
         folders: nbfolders,
         folders_archived: nbfolders_archived,
@@ -130,6 +130,37 @@ router.post('/create_folder', function (req, res, next) {
 });
 
 
+
+router.get('/delete/:folder', function (req, res, next) {
+  var folder_param = req.params.folder;
+  var path = 'public/uploads/'+folder_param;
+  console.log('delete');
+
+  Folder
+  .findOne({ name: folder_param })
+  .exec(function (err, folder) {
+    if (err) return handleError(err);
+
+    Folder.update({ name: folder.name }, {'$set': {archived: true}}, function (err) {
+      if (err) return handleError(err);
+      rimraf(path,function(err){
+        console.log(err);
+      });
+    });
+    
+
+    File.update({ _folder: folder.id }, {'$set': {archived: true} }, function (err) {
+      if (err) return handleError(err);
+      
+    });
+  });
+
+  res.redirect('/actives_directories/');
+  
+});
+
+
+
 router.get('/:folder', function (req, res, next) {
   var folder_param = req.params.folder;
   Folder
@@ -157,11 +188,11 @@ router.get('/:folder', function (req, res, next) {
           file.icon = '<i class="fa fa-file-word-o fa-2x"></i>';
           break;
 
-        case 'ppt': 
+        case 'pptx': 
           file.icon = '<i class="fa fa-file-powerpoint-o fa-2x"></i>';
           break;
 
-        case 'xls': 
+        case 'xlsx': 
           file.icon = '<i class="fa fa-file-excel-o fa-2x"></i>';
           break;
 
@@ -175,6 +206,14 @@ router.get('/:folder', function (req, res, next) {
 
         case 'js': 
           file.icon = '<i class="fa fa-code fa-2x"></i>';
+          break;
+
+        case 'zip':
+          file.icon = '<i class="fa fa-file-archive-o fa-2x"></i>';
+          break;
+
+        case 'rar':
+          file.icon = '<i class="fa fa-file-archive-o fa-2x"></i>';
           break;
 
         default:
@@ -261,34 +300,6 @@ router.get('/:folder/:file_id/delete', function (req, res, next) {
 });
 
 
-router.get('/delete/:folder', function (req, res, next) {
-  var folder_param = req.params.folder;
-  var path = 'public/uploads/'+folder_param;
-
-  Folder
-  .findOne({ name: folder_param })
-  .exec(function (err, folder) {
-    if (err) return handleError(err);
-
-    Folder.update({ name: folder.name }, {'$set': {archived: true}}, function (err) {
-      if (err) return handleError(err);
-      rimraf(path,function(err){
-        console.log(err);
-      })
-    });
-    
-
-    File.update({ _folder: folder.id }, {'$set': {archived: true} }, function (err) {
-      if (err) return handleError(err);
-      
-    });
-  });
-
-  res.redirect('/actives_directories/');
-  
-});
-
-
 router.post('/:folder/upload_file', function (req, res, next) {
   var folder = req.params.folder;
   if (!req.files.file.name || !req.body.creator)
@@ -330,9 +341,9 @@ setInterval(function(){
       });
       File.update({  _folder: folder.id }, {'$set': {archived: true}}, function (err) {
         if (err) return handleError(err);
-        fs.unlink(path,function(err){
-          console.log(err);
-        });
+        // fs.unlink(path,function(err){
+        //   console.log(err);
+        // });
       });
     });
   });

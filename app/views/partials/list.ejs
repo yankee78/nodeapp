@@ -3,7 +3,7 @@
 <%= session.errors %>
 <% session.errors = ''; %>
 <% } %>
-<a class="btn btn-primary" href="/create_folder">Créer un répértoire</a>
+<a class="btn btn-primary btn-sm" href="/create_folder">Créer un répértoire</a>
 
 <table class="table table-striped">
 	<thead>
@@ -32,7 +32,7 @@
 				<td>
 					<%= folder.expire_time.getDateTwoDigits() %>-<%=folder.expire_time.getMonthTwoDigits() %>-<%=folder.expire_time.getFullYear()%> <%= folder.expire_time.getHoursTwoDigits() %>:<%= folder.expire_time.getMinutesTwoDigits() %>:<%= folder.expire_time.getSecondsTwoDigits() %>
 				</td>
-				<td><a class="btn btn-danger btn-xs" href="/delete/<%=folder.name%>"><span class="glyphicon glyphicon-remove"></span>Supprimer</a></td>
+				<td><a onclick="return confirm('Supprimer ce dossier ?');" class="btn btn-danger btn-xs" href="/delete/<%=folder.name%>"><span class="glyphicon glyphicon-remove"></span>Supprimer</a></td>
 			</tr>
 	    <% }); %>
 	</tbody>

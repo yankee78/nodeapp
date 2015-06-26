@@ -64,6 +64,7 @@ i.glyphicon-folder-open {
   padding: 0;
   box-shadow: 1px 1px 8px #d8d8d8;
   background-color: #FFFFFF;
+  height: 80px;
 }
 .block-update-card .h-status {
   width: 100%;
@@ -79,10 +80,10 @@ i.glyphicon-folder-open {
 }
 .block-update-card .update-card-MDimentions {
   width: 80px;
-  height: 80px;
+  /*height: 80px;*/
 }
 .block-update-card .update-card-body {
-  margin-top: 10px;
+  padding-top: 10px;
   margin-left: 5px;
 }
 .block-update-card .update-card-body h4 {

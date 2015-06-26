@@ -18,18 +18,21 @@ models.forEach(function (model) {
   require(model);
 });
 var app = express();
+
+
 app.use(multer({ dest: 'public/uploads/',
 	rename: function (fieldname, filename) {
 	  return filename;
 	},
 	onFileUploadStart: function (file) {
-	console.log(file.originalname)
+	console.log(file.originalname);
 	},
 	onFileUploadComplete: function (file) {
-	console.log(file.fieldname + ' uploaded to  ' + file.path)
+	console.log(file.fieldname + ' uploaded to  ' + file.path);
 	done=true;
 	}
 }));
+
 
 
 require('./config/express')(app, config);

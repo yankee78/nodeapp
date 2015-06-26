@@ -1,6 +1,9 @@
 <% layout('../layout.ejs') %>
+<% nb = 0 %>
+<% files.forEach(function(file) { nb += file.nb_downloads; }) %>
 <h4>Créateur : <%= folder.creator %></h4>
-<a class="btn btn-primary" href="/<%= folder.name %>/upload_file">Ajouter un fichier</a>
+<div>Nombre de téléchargements : <%= nb %></div>
+<a class="btn btn-primary btn-sm" href="/<%= folder.name %>/upload_file">Ajouter un fichier</a>
 
 <table class="table table-striped">
 	<thead>
@@ -19,7 +22,7 @@
 				<td><%= file.creator %></td>
 				<td><%= file.created_at.getDate() %>-<%=file.created_at.getMonth()%>-<%=file.created_at.getFullYear()%> <%= file.created_at.getHours() %>:<%= file.created_at.getMinutes() %></td>
 				<td><%= file.nb_downloads %></td>
-				<td><a class="btn btn-danger btn-xs" href="/<%=folder.name %>/<%=file.id %>/delete"><i class="glyphicon glyphicon-remove"></i>Supprimer</a></td>
+				<td><a onclick="return confirm('Supprimer ce fichier ?');" class="btn btn-danger btn-xs" href="/<%=folder.name %>/<%=file.id %>/delete"><i class="glyphicon glyphicon-remove"></i>Supprimer</a></td>
 			</tr>
 	    <% }); %>
 	</tbody>
